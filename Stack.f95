@@ -34,32 +34,22 @@ CONTAINS
     	   overflow = -2                ! Inform of Overflow
     	END IF
 
-  	END SUBROUTINE add_to_stack
+  	END SUBROUTINE push
 
-  	SUBROUTINE delete_from_stack(last,underflow)
+  	FUNCTION pop(last,underflow, stack)
     	INTEGER, INTENT(INOUT) :: last, underflow
+    	INTEGER, INTENT(INOUT), DIMENSION(:) :: stack
 
-    	IF ( last > 0 ) THEN     ! Lower bound 1
-    	   last = last - 1       ! has not been
-    	   underflow = 0         ! violated
+    	IF ( last > 0) THEN     ! Lower bound 1
+    		pop = stack(last)
+    	   	last = last - 1       ! has not been
+    	   	underflow = 0         ! violated
     	ELSE                     ! Lower bound is
-    	   underflow = -1        ! violated, warn
+    	   	underflow = -1        ! violated, warn
     	ENDIF
 
-  	END SUBROUTINE delete_from_stack
+  	END FUNCTION pop
 
-  	SUBROUTINE select_from_stack(node,stack,last,flag)
-
-    	INTEGER :: node,last, flag
-    	INTEGER, DIMENSION(:) :: stack
-    	IF ( last > 0 .AND. last <= SIZE(stack) ) THEN ! Within bounds
-    	   node = stack(last)                          ! Read element
-    	   flag = 0                                    ! All OK
-    	ELSE                                           ! Bounds violated
-    	   flag = -3                                   ! Warn
-    	ENDIF
-
-  	END SUBROUTINE select_from_stack
 
   	FUNCTION stack_flag(stack,last) RESULT(flag)
     	INTEGER :: last, flag
