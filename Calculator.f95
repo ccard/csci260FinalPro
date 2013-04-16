@@ -39,25 +39,33 @@ CONTAINS
 
 INTEGER FUNCTION toINT(line)
 	CHARACTER(len=30),INTENT(IN)::line
-	INTEGER::size,currPower,i,ret
+	INTEGER::size,currPower,i,ret,negate,hasNeg
 	CHARACTER(len=1)::char
 
 	size = LEN(TRIM(line))
 	currPower = 10**(size-1)
 	ret = 0
+	negate = 1
+	hasNeg = 1
 
 	DO i=1,size
 		char = line(i:i)
-		ret = ret + (currPower*getint(char))
-
-		IF (i .NE. (size-1)) THEN
-			currPower = 10**((size-1)-i)
+		IF (char .EQ. '-') THEN
+			negate = -1
+			hasNeg = 2
+			currPower = 10**(size-hasNeg)
 		ELSE
-			currPower = 1
+			ret = ret + (currPower*getint(char))
+	
+			IF (i .NE. (size-1)) THEN
+				currPower = 10**((size-hasNeg)-i)
+			ELSE
+				currPower = 1
+			END IF
 		END IF
 	END DO
 
-	toINT = ret
+	toINT = ret*negate
 END FUNCTION
 
 INTEGER FUNCTION getint(char)
