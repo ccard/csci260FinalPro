@@ -14,7 +14,7 @@
 
 PROGRAM Calculator
 USE Stack
-USE art
+!USE art
 
 IMPLICIT NONE
 
@@ -29,45 +29,53 @@ INTEGER::toStack,size,right,left,overunderflow,stacksize,last
 !Begin program
 
 !testing to see if my functions are working
-WRITE(*,*) "Type integer or an operator and hit enter(q to quite)"
+WRITE(*,*) "Type integer or an operator and hit enter(q to quite,d to divide)"
 
-last = -1
+last = 0
 
 DO
 	READ(*,*) toParse
 	size = LEN(TRIM(toParse))
 	IF (size .EQ. 1) THEN
+
 		IF (isSymbol((TRIM(toParse)))) THEN
-			left = pop(last,overunderflow,thestack)
-			IF (overunderflow .EQ. -1) THEN
-				WRITE(*,*) "underflow of stack"
-				EXIT
-			END IF
+
 			right = pop(last,overunderflow,thestack)
+
 			IF (overunderflow .EQ. -1) THEN
 				WRITE(*,*) "underflow of stack"
 				EXIT
 			END IF
 
-			IF (line .EQ. '*') THEN
+			left = pop(last,overunderflow,thestack)
+
+			IF (overunderflow .EQ. -1) THEN
+				WRITE(*,*) "underflow of stack"
+				EXIT
+			END IF
+
+			IF (TRIM(toParse) .EQ. '*') THEN
 				left = left*right
-			ELSE IF (line .EQ. '/') THEN
+			ELSE IF (TRIM(toParse) .EQ. 'd') THEN
 				left = left/right
-			ELSE IF (line .EQ. '+') THEN
+			ELSE IF (TRIM(toParse) .EQ. '+') THEN
 				left = left+right
-			ELSE IF (line .EQ. '-') THEN
+			ELSE IF (TRIM(toParse) .EQ. '-') THEN
 				left = left-right
 			END IF
 
 			CALL push(left,thestack,last,overunderflow)
+
 			IF (overunderflow .EQ. -2) THEN
 				WRITE(*,*) "stack overflow error"
 				EXIT
 			END IF
+
 			WRITE(*,*) left
 
 			IF (left .EQ. 42) THEN
-			  CALL answeroftheuniverse()
+			  !CALL answeroftheuniverse()
+			  WRITE(*,*) "The answer to life"
 			END IF
 
 		ELSE
@@ -76,6 +84,7 @@ DO
 			END IF
 
 			CALL push(toINT(toParse),thestack,last,overunderflow)
+
 			IF (overunderflow .EQ. -2) THEN
 				WRITE(*,*) "stack overflow error"
 				EXIT
@@ -85,7 +94,9 @@ DO
 
 	ELSE
 		toStack = toINT(toParse)
+
 		CALL push(toStack,thestack,last,overunderflow)
+		
 		IF (overunderflow .EQ. -2) THEN
 			WRITE(*,*) "stack overflow error"
 			EXIT
@@ -104,7 +115,7 @@ LOGICAL FUNCTION isSymbol(line)
 
 	IF (line .EQ. '*') THEN
 		ret = .TRUE.
-	ELSE IF (line .EQ. '/') THEN
+	ELSE IF (line .EQ. 'd') THEN
 		ret = .TRUE.
 	ELSE IF (line .EQ. '+') THEN
 		ret = .TRUE.
