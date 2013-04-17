@@ -13,37 +13,53 @@
 
 
 PROGRAM Calculator
-!USE Stack
+USE Stack
 
 IMPLICIT NONE
 
 
 !Var Dec
-INTEGER, DIMENSION(30)::stack
+INTEGER, DIMENSION(30)::thestack
 CHARACTER(len=1)::input
 CHARACTER(len=30)::toParse
-INTEGER::toStack,size,right,left
+INTEGER::toStack,size,right,left,overunderflow,stacksize,last
 
 
 !Begin program
 
 !testing to see if my functions are working
-WRITE(*,*) "Type integer or an operator and hit enter( to evaluate the inputed expression type = or q to quite)"
+WRITE(*,*) "Type integer or an operator and hit enter(q to quite)"
+
+last = -1
 
 DO
 	READ(*,*) toParse
 	size = LEN(TRIM(toParse))
 	IF (size .EQ. 1) THEN
-		
+
+
+
 	ELSE
 		toStack = toINT(toParse)
-		!push to stack here
+		CALL push(toStack,thestack,last,overunderflow)
+		IF (overunderflow .EQ. -2) THEN
+			WRITE(*,*) "stack overflow error"
+		END IF
 	END IF
 
 	WRITE(*,*) toStack+1
 END DO
 
 CONTAINS
+
+LOGICAL FUNCTION isSymbol(line)
+	CHARACTER(len=1), INTENT(IN)::line
+
+	IF (line .EQ. '*') THEN
+
+	
+
+END FUNCTION
 
 INTEGER FUNCTION toINT(line)
 	CHARACTER(len=30),INTENT(IN)::line
