@@ -22,18 +22,26 @@ IMPLICIT NONE
 INTEGER, DIMENSION(30)::stack
 CHARACTER(len=1)::input
 CHARACTER(len=30)::toParse
-INTEGER::toStack
+INTEGER::toStack,size,right,left
 
 
 !Begin program
 
 !testing to see if my functions are working
-WRITE(*,*) "type integer or an operator and hit enter( to evaluate the inputed expression type =)"
-READ(*,*) toParse
+WRITE(*,*) "Type integer or an operator and hit enter( to evaluate the inputed expression type = or q to quite)"
 
-toStack = toINT(toParse)
+DO
+	READ(*,*) toParse
+	size = LEN(TRIM(toParse))
+	IF (size .EQ. 1) THEN
+		
+	ELSE
+		toStack = toINT(toParse)
+		!push to stack here
+	END IF
 
-WRITE(*,*) toStack+1
+	WRITE(*,*) toStack+1
+END DO
 
 CONTAINS
 
