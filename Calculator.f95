@@ -14,6 +14,7 @@
 
 PROGRAM Calculator
 USE Stack
+USE art
 
 IMPLICIT NONE
 
@@ -36,7 +37,50 @@ DO
 	READ(*,*) toParse
 	size = LEN(TRIM(toParse))
 	IF (size .EQ. 1) THEN
+		IF (isSymbol((TRIM(toParse)))) THEN
+			left = pop(last,overunderflow,thestack)
+			IF (overunderflow .EQ. -1) THEN
+				WRITE(*,*) "underflow of stack"
+				EXIT
+			END IF
+			right = pop(last,overunderflow,thestack)
+			IF (overunderflow .EQ. -1) THEN
+				WRITE(*,*) "underflow of stack"
+				EXIT
+			END IF
 
+			IF (line .EQ. '*') THEN
+				left = left*right
+			ELSE IF (line .EQ. '/') THEN
+				left = left/right
+			ELSE IF (line .EQ. '+') THEN
+				left = left+right
+			ELSE IF (line .EQ. '-') THEN
+				left = left-right
+			END IF
+
+			CALL push(left,thestack,last,overunderflow)
+			IF (overunderflow .EQ. -2) THEN
+				WRITE(*,*) "stack overflow error"
+				EXIT
+			END IF
+			WRITE(*,*) left
+
+			IF (left .EQ. 42) THEN
+			  CALL answeroftheuniverse()
+			END IF
+
+		ELSE
+			IF (TRIM(toParse) .EQ. 'q') THEN
+				EXIT
+			END IF
+
+			CALL push(toINT(toParse),thestack,last,overunderflow)
+			IF (overunderflow .EQ. -2) THEN
+				WRITE(*,*) "stack overflow error"
+				EXIT
+			END IF
+		END IF
 
 
 	ELSE
@@ -44,20 +88,31 @@ DO
 		CALL push(toStack,thestack,last,overunderflow)
 		IF (overunderflow .EQ. -2) THEN
 			WRITE(*,*) "stack overflow error"
+			EXIT
 		END IF
 	END IF
 
-	WRITE(*,*) toStack+1
 END DO
 
 CONTAINS
 
 LOGICAL FUNCTION isSymbol(line)
 	CHARACTER(len=1), INTENT(IN)::line
+	LOGICAL::ret
+
+	ret = .FALSE.
 
 	IF (line .EQ. '*') THEN
+		ret = .TRUE.
+	ELSE IF (line .EQ. '/') THEN
+		ret = .TRUE.
+	ELSE IF (line .EQ. '+') THEN
+		ret = .TRUE.
+	ELSE IF (line .EQ. '-') THEN
+		ret = .TRUE.
+	END IF
 
-	
+	isSymbol = ret
 
 END FUNCTION
 
