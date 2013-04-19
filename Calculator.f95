@@ -8,7 +8,18 @@
 !  DESCRIPTION: This is the main program
 !  VARIABLES USED:
 !       NAME:           TYPE:           COMMENT:
-!
+!		thestack 		INTEGER 		This is the stack that stores the results
+!										for the operations	
+!		toParse 		CHARACTER 		The input from the user
+! 		toStack 		INTEGER 		The conversion of user input to int
+!										to be put onto the stack
+!		size 			INTEGER 		The size of the inputed strig
+!		right 			INTEGER 		The right side of the equation
+!		left 			INTEGER 		The left side of the equation
+! 		overunderflow 	INTEGER 		This reports if we have gone over thestack
+!										the stack size or below 0
+!		last 			INTEGER 		This stores the location of the last
+!										element on the stack
 !--------------------------------------------------------------------------
 
 
@@ -21,9 +32,8 @@ IMPLICIT NONE
 
 !Var Dec
 INTEGER, DIMENSION(30)::thestack
-CHARACTER(len=1)::input
 CHARACTER(len=30)::toParse
-INTEGER::toStack,size,right,left,overunderflow,stacksize,last
+INTEGER::toStack,size,right,left,overunderflow,last
 
 
 !Begin program
