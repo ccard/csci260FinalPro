@@ -25,7 +25,7 @@
 
 PROGRAM Calculator
 USE Stack
-!USE art
+USE art
 
 IMPLICIT NONE
 
@@ -84,8 +84,8 @@ DO
 			WRITE(*,*) left
 
 			IF (left .EQ. 42) THEN
-			  !CALL answeroftheuniverse()
-			  WRITE(*,*) "The answer to life"
+			  CALL answeroftheuniverse()
+			  !WRITE(*,*) "The answer to life"
 			END IF
 
 		ELSE
