@@ -85,7 +85,11 @@ DO
 
 			IF (left .EQ. 42) THEN
 			  CALL answeroftheuniverse()
-			  !WRITE(*,*) "The answer to life"
+			ELSE IF(left .EQ. 3) THEN
+				CALL three_musketeers()
+				WRITE(*,*) "All for one and one for all!"
+			ELSE IF((mod(left, 7) .EQ. 0) .AND. left .NE. 0) THEN
+				CALL calvin_and_hobbes()
 			END IF
 
 		ELSE
