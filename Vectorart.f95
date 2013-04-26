@@ -1,3 +1,17 @@
+!--------------------------------------------------------------------------
+!  Header section:
+!  TITLE: Stack
+!  AUTHOR: Chris Card, Mark Shivers, Branden Whitaker
+!  CLASS:  CSCI260A
+!  DATE WRITTEN: 3/26/13
+!  LAST REVISION: 2/26/13
+!  DESCRIPTION: This is a module containing the ascii art function
+!				Subroutines
+!  VARIABLES USED:
+!       NAME:           TYPE:           COMMENT:
+!
+!--------------------------------------------------------------------------
+
 MODULE art
 CONTAINS
 SUBROUTINE answeroftheuniverse()
